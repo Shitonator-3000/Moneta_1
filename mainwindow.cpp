@@ -14,30 +14,29 @@ void MainWindow::Play()
 
     QString messageB, keyB, cipherB, cipherA, guessA, guessB, resultB, key2B, key2A, messageA, resultA;
 
-    // Боб выбирает орел/решка и ключ
+
     messageB = ui->lineEdit_messageBob->text(); // выбор Боба
     keyB = ui->lineEdit_keyBob->text();         // ключ Боба
     // Боб зашифровывает сообщение
     cipherB = crypt( messageB, keyB, true );
-    // Боб отправляет Алисе шифр
+    // пересылка шифртекста
     cipherA = cipherB;
 
-    // Алиса делает догадку орел/решка
-    guessA = ui->lineEdit_guessAlisa->text();   // догадка Алисы
-    // Алиса отправляет Бобу догадку
+
+    guessA = ui->lineEdit_guessAlisa->text();
     guessB = guessA;
 
-    // Боб определяет результат
+    // Боб проверяет результат
     if ( guessB == messageB ) resultB = "Поражение!";
     else resultB = "Победа!";
-    // Боб выбирает ключ для отправки
-    key2B = ui->lineEdit_key2Bob->text(); // ключ для отправки
-    // Боб отправляет ключ
+    // второй ключ отправлется
+    key2B = ui->lineEdit_key2Bob->text();
+    // Боб отправляет ключ2
     key2A = key2B;
 
-    // Алиса расшифровывает сообщение
+    // Алиса декрипт
     messageA = crypt( cipherA, key2A, false );
-    // Если расшифрованное сообщение на содержит "OREL" или "RESHKA", то Боб лжец
+
     if ( messageA != "Орел" && messageA != "Решка" ) resultA = "Ключ недействителен!";
     else{
         if ( messageA == guessA ) resultA = "Победа!";
